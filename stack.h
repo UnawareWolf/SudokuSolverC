@@ -10,3 +10,4 @@ typedef struct bStack {
 bStack* newNode(board* b);
 void push(bStack** root, board* data);
 board* pop(bStack** root);
+int isEmpty(bStack* root);

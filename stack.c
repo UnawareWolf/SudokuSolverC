@@ -24,3 +24,8 @@ board* pop(bStack** root)
     free(temp);
     return popped;
 }
+
+int isEmpty(bStack* root)
+{
+    return !root;
+}
