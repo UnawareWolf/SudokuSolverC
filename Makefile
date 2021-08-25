@@ -1,8 +1,11 @@
-solver.o: solver.c solver.h
+stack.o: stack.c stack.h
+	gcc -c stack.c
+
+solver.o: stack.h solver.c solver.h
 	gcc -c solver.c
 
-build: solver.o
-	gcc solver.o -o solver
+build: stack.o solver.o
+	gcc stack.o solver.o -o solver
 
 run: build
 	./solver < board1.csv

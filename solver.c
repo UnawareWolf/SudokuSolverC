@@ -1,39 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "solver.h"
-
-typedef struct board {
-    int** values;
-} board;
-
-typedef struct bStack {
-    board* b;
-    struct bStack* next;
-} bStack;
-
-bStack* newNode(board* b)
-{
-    bStack* node = (bStack*) malloc(sizeof(bStack));
-    node->b = b;
-    node->next = NULL;
-    return node;
-}
-
-void push(bStack** root, board* data)
-{
-    bStack* node = newNode(data);
-    node->next = *root;
-    *root = node;
-}
-
-board* pop(bStack** root)
-{
-    bStack* temp = *root;
-    *root = (*root)->next;
-    board* popped = temp->b;
-    free(temp);
-    return popped;
-}
+#include "stack.h"
 
 int main()
 {
@@ -42,8 +10,8 @@ int main()
     int myboard[BSIZE][BSIZE];
     int i, j;
 
-    b2.values = malloc(9*sizeof(int*));
-    for (i=0;i<9;i++) b2.values[i] = malloc(9*sizeof(int));
+    b2.values = malloc(BSIZE*sizeof(int*));
+    for (i=0;i<BSIZE;i++) b2.values[i] = malloc(BSIZE*sizeof(int));
 
     
     for (i = 0; i < BSIZE; i++) {
