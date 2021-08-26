@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "stack.h"
 
 bStack* newNode(board* b)
@@ -28,4 +29,45 @@ board* pop(bStack** root)
 int isEmpty(bStack* root)
 {
     return !root;
+}
+
+int hasNext(slotList* node)
+{
+    return !(&(node->next));
+}
+
+void add(slotList** root, slot* s)
+{
+    slotList* node = (slotList*) malloc(sizeof(slotList));
+    node->s = s;
+    node->next = NULL;
+    // // slotList* current = root;
+    // // printf("%i\n", hasNext(current));
+    if (*root == NULL) {
+        puts("root was null");
+        // *root = (slotList*) malloc(sizeof(slotList));
+        // current = node;
+        *root = node;
+        // (*root)->next = NULL;
+        // (*root)->s = s;
+    }
+    else {
+        slotList* current = *root;
+        puts("not null");
+        while (current->next != NULL) {
+            printf("hi %i\n", current->s->col);
+            current = current->next;
+        }
+        // slotList* node = (slotList*) malloc(sizeof(slotList));
+        // node->s = s;
+        // node->next = NULL;
+        current->next = node;
+    }
+    
+    
+}
+
+void clear(slotList** root)
+{
+
 }

@@ -3,23 +3,45 @@
 #include "stack.h"
 #include "solver.h"
 
-
 int main()
 {
     board* b1 = createBoard();
-    board* b2 = createBoard();
-    fillBoard(b1, 4);
-    board* b3 = createBoard();
-    copyBoard(b1, b3);
-    b3->values[0][0] = 6;
-    scanBoard(b2);
+    board* temp = createBoard();
+    board* current = createBoard();
+    scanBoard(b1);
     bStack* root = NULL;
     push(&root, b1);
-    push(&root, b2);
-    push(&root, b3);
+    int count = 0;
     while (!isEmpty(root)) {
-        printBoard(pop(&root));
+        count++;
+        current = pop(&root);
+        printBoard(current);
     }
+
+    slot s1 = {2, 1};
+    slot s2 = {3, 4};
+    slot s3 = {5, 6};
+    
+    slotList* head = NULL;
+    slotList* second = NULL;
+
+    // head = (slotList*) malloc(sizeof(slotList));
+    // second = (slotList*) malloc(sizeof(slotList));
+
+    // head->s = &s1;
+    // head->next = second;
+
+    // second->s = &s2;
+    // second->next = NULL;
+
+    // add(head, &s3);
+
+
+    add(&head, &s1);
+    add(&head, &s2);
+    printf("%i\n", head->next->s->col);
+    // add(list, &s3);
+
 
     return 0;
 }
