@@ -14,12 +14,11 @@ int main()
     push(&root, b1);
     int count = 0;
     while (!isEmpty(root)) {
-        count++;
         current = pop(&root);
         printBoard(current);
 
         slotHead = getEmptySlots(current);
-
+        
         if (slotHead == NULL) {
             puts("Solved!");
             break;
@@ -33,7 +32,7 @@ int main()
         if (isEmpty(root)) {
             slotList* currentSlot = slotHead;
             int guess;
-            while (currentSlot->next != NULL) {
+            while (currentSlot != NULL) {
                 for (guess = 1; guess <= 9; guess++) {
                     if (isValidInSlot(guess, currentSlot->s, current)) {
                         push(&root, updateBoard(guess, currentSlot->s, current));
@@ -42,10 +41,12 @@ int main()
                 currentSlot = currentSlot->next;
             }
         }
-
+        
         freeSlots(slotHead);
         freeBoard(current);
+        count++;
     }
+    printf("%i moves\n", count);
 
     return 0;
 }
@@ -54,8 +55,8 @@ board* doPerfectMove(slotList* slotHead, board* b)
 {
     int guess;
     slotList* currentSlot = slotHead;
-    while (currentSlot->next != NULL) {
-        for (guess = 1; guess <= 9; guess ++) {
+    while (currentSlot != NULL) {
+        for (guess = 1; guess <= 9; guess++) {
             if (onlyValidGuessInSlot(guess, currentSlot->s, b)) {
                 return updateBoard(guess, currentSlot->s, b);
             }
@@ -104,10 +105,8 @@ int onlyValidSlotInRow(int guess, slot* s, board* b)
         if (i == s->row) {
             continue;
         }
-        slot* newSlot = (slot*) malloc(sizeof(slot));
-        newSlot->row = i;
-        newSlot->col = s->col;
-        if (b->values[i][s->col] == 0 && isValidInSlot(guess, newSlot, b)) {
+        slot newSlot = {i, s->col};
+        if (b->values[i][s->col] == 0 && isValidInSlot(guess, &newSlot, b)) {
             return 0;
         }
     }
@@ -121,10 +120,8 @@ int onlyValidSlotInCol(int guess, slot* s, board* b)
         if (j == s->col) {
             continue;
         }
-        slot* newSlot = (slot*) malloc(sizeof(slot));
-        newSlot->row = s->row;
-        newSlot->col = j;
-        if (b->values[s->row][j] == 0 && isValidInSlot(guess, newSlot, b)) {
+        slot newSlot = {s->row, j};
+        if (b->values[s->row][j] == 0 && isValidInSlot(guess, &newSlot, b)) {
             return 0;
         }
     }
@@ -143,10 +140,8 @@ int onlyValidSlotInSquare(int guess, slot* s, board* b)
             if (i == s->row && j == s->col) {
                 continue;
             }
-            slot* newSlot = (slot*) malloc(sizeof(slot));
-            newSlot->row = i;
-            newSlot->col = j;
-            if (b->values[i][j] == 0 && isValidInSlot(guess, newSlot, b)) {
+            slot newSlot = {i, j};
+            if (b->values[i][j] == 0 && isValidInSlot(guess, &newSlot, b)) {
                 return 0;
             }
         }
@@ -223,7 +218,7 @@ board* createBoard()
 {
     board* b = (board*) malloc(sizeof(board));
     int i;
-    b->values = malloc(BSIZE*sizeof(int*));
+    b->values = malloc(BSIZE * sizeof(int*));
     for (i = 0; i < BSIZE; i++)
         b->values[i] = malloc(BSIZE * sizeof(int));
     return b;
@@ -270,7 +265,7 @@ void freeSlots(slotList* slotHead)
 {
     slotList* currentSlot = slotHead;
     slotList* lastSlot;
-    while (currentSlot->next != NULL) {
+    while (currentSlot != NULL) {
         free(currentSlot->s);
         lastSlot = currentSlot;
         currentSlot = currentSlot->next;

@@ -11,4 +11,4 @@ build: stack.o solver.o
 	gcc -g stack.o solver.o -o solver
 
 run: build
-	./solver < board1.csv
+	./solver < board_hard.csv
