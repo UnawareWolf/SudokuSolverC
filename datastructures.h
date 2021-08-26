@@ -18,10 +18,8 @@ typedef struct slotList {
 } slotList;
 
 bStack* newNode(board* b);
-void push(bStack** root, board* data);
-board* pop(bStack** root);
+void pushBoard(bStack** root, board* data);
+board* popBoard(bStack** root);
 int isEmpty(bStack* root);
 
-void add(slotList** root, slot* s);
-void clear(slotList** root);
-int hasNext(slotList* node);
+void addSlot(slotList** root, slot* s);

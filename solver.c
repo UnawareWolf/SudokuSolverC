@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.h"
+#include "datastructures.h"
 #include "solver.h"
 
 int main()
@@ -11,10 +11,10 @@ int main()
     scanBoard(b1);
     bStack* root = NULL;
     slotList* slotHead = NULL;
-    push(&root, b1);
+    pushBoard(&root, b1);
     int count = 0;
     while (!isEmpty(root)) {
-        current = pop(&root);
+        current = popBoard(&root);
         printBoard(current);
 
         slotHead = getEmptySlots(current);
@@ -26,7 +26,7 @@ int main()
 
         temp = doPerfectMove(slotHead, current);
         if (temp != NULL) {
-            push(&root, temp);
+            pushBoard(&root, temp);
         }
 
         if (isEmpty(root)) {
@@ -35,7 +35,7 @@ int main()
             while (currentSlot != NULL) {
                 for (guess = 1; guess <= 9; guess++) {
                     if (isValidInSlot(guess, currentSlot->s, current)) {
-                        push(&root, updateBoard(guess, currentSlot->s, current));
+                        pushBoard(&root, updateBoard(guess, currentSlot->s, current));
                     }
                 }
                 currentSlot = currentSlot->next;
@@ -207,7 +207,7 @@ slotList* getEmptySlots(board* b)
                 slot* s = (slot*) malloc(sizeof(slot));
                 s->row = i;
                 s->col = j;
-                add(&head, s);
+                addSlot(&head, s);
             }
         }
     }

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "stack.h"
+#include "datastructures.h"
 
 bStack* newNode(board* b)
 {
@@ -10,14 +10,14 @@ bStack* newNode(board* b)
     return node;
 }
 
-void push(bStack** root, board* data)
+void pushBoard(bStack** root, board* data)
 {
     bStack* node = newNode(data);
     node->next = *root;
     *root = node;
 }
 
-board* pop(bStack** root)
+board* popBoard(bStack** root)
 {
     bStack* temp = *root;
     *root = (*root)->next;
@@ -36,7 +36,7 @@ int hasNext(slotList* node)
     return !(&(node->next));
 }
 
-void add(slotList** root, slot* s)
+void addSlot(slotList** root, slot* s)
 {
     slotList* node = (slotList*) malloc(sizeof(slotList));
     node->s = s;
@@ -51,9 +51,4 @@ void add(slotList** root, slot* s)
         }
         current->next = node;
     }
-}
-
-void clear(slotList** root)
-{
-
 }

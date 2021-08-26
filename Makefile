@@ -1,14 +1,14 @@
 CC = g++
 CXXFLAGS = -std=c++11 -ggdb -g
 
-stack.o: stack.c stack.h
-	gcc -g -c stack.c
+datastructures.o: datastructures.c datastructures.h
+	gcc -g -c datastructures.c
 
-solver.o: stack.h solver.c solver.h
+solver.o: datastructures.h solver.c solver.h
 	gcc -g -c solver.c
 
-build: stack.o solver.o
-	gcc -g stack.o solver.o -o solver
+build: datastructures.o solver.o
+	gcc -g datastructures.o solver.o -o solver
 
 run: build
 	./solver < board_hard.csv
