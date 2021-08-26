@@ -30,13 +30,6 @@ int main()
             push(&root, temp);
         }
 
-        // slotList* currentSlot = slotHead;
-        // while (currentSlot->next != NULL) {
-        //     int validSix = isValidInSlot(6, currentSlot->s, current);
-        //     printf("row %i col %i 6 is valid %i\n", currentSlot->s->row, currentSlot->s->col, validSix);
-        //     currentSlot = currentSlot->next;
-        // }
-
         if (isEmpty(root)) {
             slotList* currentSlot = slotHead;
             int guess;
@@ -49,6 +42,9 @@ int main()
                 currentSlot = currentSlot->next;
             }
         }
+
+        freeSlots(slotHead);
+        freeBoard(current);
     }
 
     return 0;
@@ -268,4 +264,22 @@ void printBoard(board* b)
         }
     }
     puts("");
+}
+
+void freeSlots(slotList* slotHead)
+{
+    slotList* currentSlot = slotHead;
+    slotList* lastSlot;
+    while (currentSlot->next != NULL) {
+        free(currentSlot->s);
+        lastSlot = currentSlot;
+        currentSlot = currentSlot->next;
+        free(lastSlot);
+    }
+}
+
+void freeBoard(board* b)
+{
+    free(b->values);
+    free(b);
 }

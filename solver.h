@@ -17,3 +17,6 @@ int otherGuessesInvalidInSlot(int guess, slot* s, board* b);
 int onlyValidSlotInRow(int guess, slot* s, board* b);
 int onlyValidSlotInCol(int guess, slot* s, board* b);
 int onlyValidSlotInSquare(int guess, slot* s, board* b);
+
+void freeSlots(slotList* slotHead);
+void freeBoard(board* b);
