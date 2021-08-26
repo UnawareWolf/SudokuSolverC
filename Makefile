@@ -1,11 +1,14 @@
+CC = g++
+CXXFLAGS = -std=c++11 -ggdb -g
+
 stack.o: stack.c stack.h
-	gcc -c stack.c
+	gcc -g -c stack.c
 
 solver.o: stack.h solver.c solver.h
-	gcc -c solver.c
+	gcc -g -c solver.c
 
 build: stack.o solver.o
-	gcc stack.o solver.o -o solver
+	gcc -g stack.o solver.o -o solver
 
 run: build
 	./solver < board1.csv

@@ -10,40 +10,57 @@ int main()
     board* current = createBoard();
     scanBoard(b1);
     bStack* root = NULL;
+    slotList* slotHead = NULL;
     push(&root, b1);
     int count = 0;
     while (!isEmpty(root)) {
         count++;
         current = pop(&root);
         printBoard(current);
+
+        slotHead = getEmptySlots(current);
+
+        if (slotHead == NULL) {
+            puts("Solved!");
+            break;
+        }
+
+        slotList* currentSlot = slotHead;
+        while (currentSlot->next != NULL) {
+            // printf("row %i col %i\n", currentSlot->s->row, currentSlot->s->col);
+            currentSlot = currentSlot->next;
+        }
     }
 
-    slot s1 = {2, 1};
-    slot s2 = {3, 4};
-    slot s3 = {5, 6};
+    // slot s1 = {2, 1};
+    // slot s2 = {3, 4};
+    // slot s3 = {5, 6};
     
-    slotList* head = NULL;
-    slotList* second = NULL;
+    // slotList* head = NULL;
 
-    // head = (slotList*) malloc(sizeof(slotList));
-    // second = (slotList*) malloc(sizeof(slotList));
-
-    // head->s = &s1;
-    // head->next = second;
-
-    // second->s = &s2;
-    // second->next = NULL;
-
-    // add(head, &s3);
-
-
-    add(&head, &s1);
-    add(&head, &s2);
-    printf("%i\n", head->next->s->col);
-    // add(list, &s3);
+    // add(&head, &s1);
+    // add(&head, &s2);
+    // printf("%i\n", head->s->col);
 
 
     return 0;
+}
+
+slotList* getEmptySlots(board* b)
+{
+    slotList* head = NULL;
+    int i, j;
+    for (i = 0; i < BSIZE; i++) {
+        for (j = 0; j < BSIZE; j++) {
+            if (b->values[i][j] == 0) {
+                slot* s = (slot*) malloc(sizeof(slot));
+                s->row = i;
+                s->col = j;
+                add(&head, s);
+            }
+        }
+    }
+    return head;
 }
 
 board* createBoard()
